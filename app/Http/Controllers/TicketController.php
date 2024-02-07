@@ -43,6 +43,7 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
+        // dd($request->all());
         // $image=$request->images;
         // $newName="gallery_".uniqid().".".$image->extension();
         // $image->storeAs("public/gallery",$newName);
@@ -60,8 +61,10 @@ class TicketController extends Controller
         $ticket->title=$request->title;
         $ticket->description=$request->description;
         $ticket->priority_id=$request->priority_id;
-        $ticket->label_id=$request->label_id;
-        $ticket->category_id=$request->category_id;
+        // $ticket->label_id=$request->label_id;
+        // $ticket->category_id=$request->category_id;
+        $ticket->labels()->attach($request['label_id']);
+        $ticket->categories()->attach($request['category_id']);
         $ticket->save();
         return redirect()->route('ticket.create')->with('success','ticket is Saving Successful');
     }

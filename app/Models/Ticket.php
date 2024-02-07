@@ -24,4 +24,15 @@ class Ticket extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    public function labels()
+    {
+        return $this->belongsToMany(Label::class, 'ticket_label', 'ticket_id', 'label_id')
+                    ->withTimestamps();
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'ticket_category', 'ticket_id', 'category_id')
+                    ->withTimestamps();
+    }
 }

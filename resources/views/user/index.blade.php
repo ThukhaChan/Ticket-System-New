@@ -22,7 +22,9 @@
                           </div>
                        @endif
                       </div>
-                       <h1> User Table</h1>
+                      <div class="d-flex justify-content-center"> <h1 class=""> User Table</h1>
+                        {{-- <img  style="width:100px; height:100px" src={{ asset('dist/img/boy.svg') }} class="" alt="User Image"> --}}
+                      </div>
                        <table class="table table-striped">
                         <thead class="custom-table">
                           <tr>
@@ -50,7 +52,7 @@
                                       <i class="fas fa-edit"></i>
                                     </a>
                                     
-                                    <form method="POST" action="{{ route('user.destroy',$user->id) }}" class="d-inline-block">
+                                    <form method="POST" action="{{ route('user.destroy',$user->id) }}" class="d-inline-block ">
                                         @method('delete')
                                         @csrf
                                        <button href="" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">

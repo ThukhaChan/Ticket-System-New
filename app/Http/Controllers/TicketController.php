@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use App\Models\Category;
+use App\Models\Label;
 use App\Models\Priority;
 
 class TicketController extends Controller
@@ -28,7 +30,9 @@ class TicketController extends Controller
     public function create()
     {
         $priorities=Priority::all();
-        return view('ticket.create',compact('priorities'));
+        $labels=Label::all();
+        $categories=Category::all();
+        return view('ticket.create',compact('priorities','labels','categories'));
     }
 
     /**
@@ -39,11 +43,20 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        $image=$request->image;
-        $newName="gallery_".uniqid().".".$image->extension();
-        $image->storeAs("public/gallery",$newName);
+        // $image=$request->images;
+        // $newName="gallery_".uniqid().".".$image->extension();
+        // $image->storeAs("public/gallery",$newName);
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $newName="gallery_".uniqid().".".$file->extension();
+                $imagePaths[]=$file->storeAs("public/gallery",$newName);
+            }
+        }
+        $imagePathsString = implode(',', $imagePaths);
+        // Store image paths as comma-separated string
         $ticket=new Ticket();
-        $ticket->image=$newName;
+        $ticket->image=$imagePathsString;
         $ticket->title=$request->title;
         $ticket->description=$request->description;
         $ticket->priority_id=$request->priority_id;
@@ -61,7 +74,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        return view('ticket.detail',compact('ticket'));
     }
 
     /**
@@ -72,7 +85,10 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        $priorities=Priority::all();
+        $labels=Label::all();
+        $categories=Category::all();
+        return view('ticket.edit',compact('categories','priorities','labels','ticket'))->with('edit','Ticket is Editing Successful');
     }
 
     /**
@@ -84,7 +100,29 @@ class TicketController extends Controller
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        //
+        if($request->image)
+        {
+            $image=$request->image;
+
+            $newName="gallery_".uniqid().".".$image->extension();
+            $image->storeAs("public/gallery",$newName);
+           
+            $ticket->title=$request->title;
+            $ticket->description=$request->description;
+            $ticket->priority_id=$request->priority_id;
+            $ticket->label_id=$request->label_id;
+            $ticket->category_id=$request->category_id;
+            $ticket->image=$newName;
+            $ticket->update();
+            return redirect()->route('ticket.index')->with('update','Ticket is Updating Successful');
+        }
+            $ticket->title=$request->title;
+            $ticket->description=$request->description;
+            $ticket->priority_id=$request->priority_id;
+            $ticket->label_id=$request->label_id;
+            $ticket->category_id=$request->category_id;
+            $ticket->update();
+            return redirect()->route('ticket.index')->with('update','Ticket is Updating Successful');
     }
 
     /**
@@ -95,6 +133,8 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        if($ticket)
+        $ticket->delete();
+    return redirect()->route('ticket.index')->with('delete','Ticket is Deleting Successful');
     }
 }

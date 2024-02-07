@@ -5,9 +5,7 @@
         <div class="col-md-8">
             <div class="card-body shadow">
               <div class="mb-3">
-                <a href="{{ route('priority.create') }}" class="btn btn-outline-success">
-                    <i class="fas fa-plus"></i>
-                </a>
+                
             </div>
                 <table class="table">
                     <thead>

@@ -36,8 +36,8 @@
                                 </div>
                                 <div class="mb-3 mt-3">
                                     <label  class="form-label">Choose Image<small class="text-danger">*</small></label>
-                                    <input type="file" class="form-control" name="image" accept="image/*">
-                                    @error('image')
+                                    <input type="file" class="form-control" name="images[]" accept="image/*" multiple>
+                                    @error('images')
                                      <div class="text-danger">
                                         *{{ $message }}
                                      </div>
@@ -59,33 +59,27 @@
                                 </div>
                                 <div class="mb-3 mt-3">
                                   <label  class="form-label">Label<small class="text-danger">*</small></label><br>
+                                  @foreach ($labels as $label)
+
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                    <label class="form-check-label" for="inlineCheckbox1">bug</label>
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="{{ $label->id }}" name="label_id">
+                                    <label class="form-check-label" for="inlineCheckbox1">
+                                        @if($label->id == old('label_id')) selected @endif>
+                                        {{ $label->name }}</label>
                                   </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                    <label class="form-check-label" for="inlineCheckbox2">question</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                    <label class="form-check-label" for="inlineCheckbox2">enhancement</label>
-                                  </div>
+                                  @endforeach
+                                  
                                 </div>
                                 <div class="mb-3 mt-3">
                                     <label  class="form-label">Categories<small class="text-danger">*</small></label><br>
+                                    @foreach ($categories as $category)
                                     <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                      <label class="form-check-label" for="inlineCheckbox1">Uncategorized</label>
+                                      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="{{ $category->id }}" name="category_id">
+                                      <label class="form-check-label" for="inlineCheckbox1">
+                                        @if($category->id == old('category_id')) selected @endif>
+                                        {{ $category->name }}</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                      <label class="form-check-label" for="inlineCheckbox2">Billing/payment</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                      <label class="form-check-label" for="inlineCheckbox2">Technical question</label>
-                                    </div>
+                                    @endforeach
                                   </div>
                                 <div class="mb-4">
                                     <a href="{{ route('ticket.index') }}" class="btn btn-outline-dark">Back</a>

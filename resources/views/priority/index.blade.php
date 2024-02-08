@@ -24,7 +24,7 @@
     }
   </style>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 p-5 rounded-1">
             <div class="card-body">
               @if (session('edit'))
                 <div class=" alert alert-warning">
@@ -42,7 +42,8 @@
                 </div>
               @endif
             </div>
-                <table class="table table-striped">
+            <h1 class="text-center text-bold">Priority</h1>
+                <table class="table table-striped shadow">
                     <thead class="custom-table">
                       <tr>
                         <th scope="col">#</th>
@@ -65,9 +66,9 @@
                                 <a href="{{ route('priority.edit',$priority->id) }}" class="btn btn-outline-warning me-1">
                                   <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="{{ route('priority.show',$priority->id) }}" class="btn btn-outline-info me-1">
+                                {{-- <a href="{{ route('priority.show',$priority->id) }}" class="btn btn-outline-info me-1">
                                   <i class="fas fa-info"></i>
-                              </a>
+                              </a> --}}
                                 <form method="POST" action="{{ route('priority.destroy',$priority->id) }}" class="d-inline-block">
                                     @method('delete')
                                     @csrf

@@ -1,32 +1,51 @@
 @extends('dashboard.index')
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card mt-5 shadow">
-                    <div class="card-body m-3">
-                      <div class="mb-3">
-                        @if (session('edit'))
-                         <div class=" alert alert-warning">
-                          {{ session('edit') }}
-                         </div>
-                       @endif
-                       @if (session('update'))
-                         <div class=" alert alert-success">
-                           {{ session('update') }}
-                         </div>
-                       @endif
-                       @if (session('delete'))
-                          <div class=" alert alert-danger">
-                             {{ session('delete') }}
-                          </div>
-                       @endif
-                      </div>
-                      <div class="d-flex justify-content-center"> <h1 class=""> User Table</h1>
-                        {{-- <img  style="width:100px; height:100px" src={{ asset('dist/img/boy.svg') }} class="" alt="User Image"> --}}
-                      </div>
-                       <table class="table table-striped">
-                        <thead class="custom-table">
+<div class="container">
+  <style>
+    .custom-table th, .custom-tbody td {
+      text-align: center;
+    }
+    
+    .custom-table th {
+      background-color: #849180; 
+      color: #fff;
+    } 
+
+    .custom-tbody tbody{
+      background-color: #700f0f;
+    }
+
+    .custom-tbody tbody tr:nth-child(even) {
+      background-color: #f2f2f2; /* Light gray for even rows */
+    }
+
+    .custom-tbody tbody tr:hover {
+      background-color: #cce5ff; /* Light blue on hover */
+    }
+    }
+  </style>
+    <div class="row justify-content-center">
+        <div class="col-md-8 p-5 rounded-1">
+            <div class="card-body">
+              @if (session('edit'))
+                <div class=" alert alert-warning">
+                 {{ session('edit') }}
+                </div>
+              @endif
+              @if (session('update'))
+                <div class=" alert alert-success">
+                 {{ session('update') }}
+                </div>
+              @endif
+              @if (session('delete'))
+                <div class=" alert alert-danger">
+                 {{ session('delete') }}
+                </div>
+              @endif
+            </div>
+            <h1 class="text-center text-bold"> User</h1>
+                <table class="table table-striped shadow">
+                    <thead class="custom-table">
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>

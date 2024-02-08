@@ -8,6 +8,10 @@ use App\Http\Requests\UpdateCommentRequest;
 
 class CommentController extends Controller
 {
+    public function __construct()
+{
+    $this->Middleware('auth');
+}
     /**
      * Display a listing of the resource.
      *
@@ -64,7 +68,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        
     }
 
     /**

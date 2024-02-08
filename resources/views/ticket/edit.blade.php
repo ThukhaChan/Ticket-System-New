@@ -7,7 +7,7 @@
                <div class="card mt-5 shadow">
                 <div class="card-body m-3">
                     <div class="">
-                        <h1>Ticket</h1>
+                        <h1 class="text-bold">Ticket</h1>
                         <form method="POST" action="{{ route('ticket.update',$ticket->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
@@ -46,34 +46,57 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3 mt-3">
-                                    <label class="form-label">Category<small class="text-danger">*</small></label>
-                                    <select class="form-control" name="category_id">
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}"
-                                                @if ($category->id == old('category_id')) selected @endif>
-                                                {{ $category->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('category_id')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                            </div>
-                            <div class="mb-3 mt-3">
-                                <label class="form-label">Label<small class="text-danger">*</small></label>
-                                <select class="form-control" name="label_id">
-                                    @foreach ($labels as $label)
-                                        <option value="{{ $label->id }}"
-                                            @if ($label->id == old('label_id')) selected @endif>
+                            
+                            <div class="mb-3">
+                                <label for="label_id" class="form-label">Labels:</label>
+                                @foreach ($labels as $label)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="label_{{ $label->id }}"
+                                            name="label_id[]" value="{{ $label->id }}"
+                                            {{ in_array($label->id, $checkedLabels) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="label_{{ $label->id }}">
                                             {{ $label->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                        </label>
+                                    </div>
+                                @endforeach
                                 @error('label_id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                        </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="category_id" class="form-label">Categories:</label>
+                                @foreach ($categories as $category)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                            id="category_{{ $category->id }}" name="category_id[]"
+                                            value="{{ $category->id }}"
+                                            {{ in_array($category->id,$checkedCategories) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="category_{{ $category->id }}">
+                                            {{ $category->name }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                                @error('category_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            @if ((Auth::user()->role==0) )
+                            <div class="mb-3 mt-3">
+                                <label class="form-label">Select Agent Assign<small class="text-danger">*</small></label>
+                                <select class="form-control" name="user">
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}"
+                                           {{ $ticket->user_assign_id==$user->id ? ' selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('priority_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            @endif
+
                             <div class="mb-4">
                                 <a href="{{ route('ticket.index') }}" class="btn btn-outline-dark">Back</a>
                                 <button class="btn btn-outline-primary">Update</button>

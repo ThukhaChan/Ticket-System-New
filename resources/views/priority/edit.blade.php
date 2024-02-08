@@ -6,7 +6,7 @@
                <div class="card mt-5 shadow">
                 <div class="card-body m-3">
                     <div class="">
-                        <h1>Priority</h1>
+                        <h1 text-bold>Priority</h1>
                         <form method="POST" action="{{ route('priority.update',$priority->id) }}">
                             @csrf
                             @method('PUT')

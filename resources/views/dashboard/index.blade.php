@@ -39,7 +39,7 @@
             <a href="index3.html" class="brand-link">
                 <img src={{ asset('dist/img/gicLogo.png') }} alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-bold text-warning">Ticket</span>
+                <span class="brand-text font-weight-bold" style="color:  #add8e6;">TicketGenius</span>
             </a>
 
             <!-- Sidebar -->
@@ -47,10 +47,10 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src={{ asset('dist/img/eren.jpg') }} class="img-circle elevation-2" alt="User Image">
+                        <img src={{ asset('dist/img/avatar4.png') }} class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block"><span style="color: #00FF00">
+                        <a href="#" class="d-block"><span style="color: #add8e6">
                             {{ Auth::user()->name }}
                         </span></a>
                     </div>
@@ -70,74 +70,18 @@
                 </div> --}}
 
                 <!-- Sidebar Menu -->
+
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link ">
-                                <span style="color: #FF0000;">
-                                 <i class="nav-icon fas fa-th"></i>
-                                </span>
-                                <p style="color: #fdff00">
-                                    User
-                                    {{-- <span class="right badge badge-danger">New</span> --}}
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ route('user.create') }}" class="nav-link">
-                                <span style="color: Tomato;">
-                                  <i class="nav-icon fas fa-plus"></i>
-                                </span>
-                                <p style="color: #00FF00">
-                                    Create User
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                        <li class="nav-item">
-                            <a href="{{ route('priority.index') }}" class="nav-link">
-                                <span style="color: #fdff00;">
-                                 <i class="nav-icon fas fa-list-alt"></i>
-                                </span>
-                                <p style="color: #00FFFF">
-                                    Priority
-                                    {{-- <span class="right badge badge-danger">New</span>  --}}
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                        <li class="nav-item">
-                            <a href="{{ route('priority.create') }}" class="nav-link">
-                                <span style="color: #00FF00;">
-                                 <i class="nav-icon fas fa-plus"></i>
-                                </span>
-                                <p style="color:Tomato ">
-                                    Create priotity
-                                </p>
-                            </a>
-                        </li>
-                    </ul> 
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="{{ route('ticket.index') }}" class="nav-link">
-                                <span style="color: #fdff00;">
+                                <span style="color: #7393B3;">
                                  <i class="nav-icon fas fa-list-alt"></i>
                                 </span>
-                                <p style="color: #00FFFF">
+                                <p style="color: #ffffff">
                                     Ticket
                                     {{-- <span class="right badge badge-danger">New</span>  --}}
                                 </p>
@@ -150,25 +94,84 @@
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="{{ route('ticket.create') }}" class="nav-link">
-                                <span style="color: #00FF00;">
+                                <span style="color: #7393B3;">
                                  <i class="nav-icon fas fa-plus"></i>
                                 </span>
-                                <p style="color:Tomato ">
-                                    Create Ticket
+                                <p style="color: #ffffff ">
+                                    Create Ticket 
                                 </p>
                             </a>
                         </li>
                     </ul> 
+                    @if ((Auth::user()->role==0))
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route('user.index') }}" class="nav-link ">
+                                <span style="color: #B2BEB5;">
+                                 <i class="nav-icon fas fa-th"></i>
+                                </span>
+                                <p style="color: #ffffff">
+                                    User
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route('user.create') }}" class="nav-link">
+                                <span style="color: #7393B3;">
+                                  <i class="nav-icon fas fa-plus"></i>
+                                </span>
+                                <p style="color: #ffffff">
+                                    Create User
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="{{ route('priority.index') }}" class="nav-link">
+                                <span style="color: #B2BEB5;">
+                                 <i class="nav-icon fas fa-list-alt"></i>
+                                </span>
+                                <p style="color: #ffffff">
+                                    Priority
+                                    {{-- <span class="right badge badge-danger">New</span>  --}}
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="{{ route('priority.create') }}" class="nav-link">
+                                <span style="color: #7393B3;">
+                                 <i class="nav-icon fas fa-plus"></i>
+                                </span>
+                                <p style="color:#ffffff ">
+                                    Create priotity
+                                </p>
+                            </a>
+                        </li>
+                    </ul> 
+                    
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="{{ route('category.index') }}" class="nav-link">
-                            <span style="color: #fdff00;">
+                            <span style="color: #B2BEB5;">
                              <i class="nav-icon fas fa-list-alt"></i>
                             </span>
-                            <p style="color: #00FFFF">
+                            <p style="color: #feffff">
                                 Category
                                 {{-- <span class="right badge badge-danger">New</span>  --}}
                             </p>
@@ -181,10 +184,10 @@
            with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="{{ route('category.create') }}" class="nav-link">
-                            <span style="color: #00FF00;">
+                            <span style="color: #7393B3;">
                              <i class="nav-icon fas fa-plus"></i>
                             </span>
-                            <p style="color:Tomato ">
+                            <p style="color:rgb(255, 255, 255) ">
                                 Create Category
                             </p>
                         </a>
@@ -196,10 +199,10 @@
        with font-awesome or any other icon font library -->
                 <li class="nav-item">
                     <a href="{{ route('label.index') }}" class="nav-link">
-                        <span style="color: #fdff00;">
+                        <span style="color: #B2BEB5;">
                          <i class="nav-icon fas fa-list-alt"></i>
                         </span>
-                        <p style="color: #00FFFF">
+                        <p style="color: #f8ffff">
                             Label
                             {{-- <span class="right badge badge-danger">New</span>  --}}
                         </p>
@@ -212,21 +215,22 @@
        with font-awesome or any other icon font library -->
                 <li class="nav-item">
                     <a href="{{ route('label.create') }}" class="nav-link">
-                        <span style="color: #00FF00;">
+                        <span style="color: #7393B3;">
                          <i class="nav-icon fas fa-plus"></i>
                         </span>
-                        <p style="color:Tomato ">
+                        <p style="color:rgb(211, 205, 204) ">
                             Create label
                         </p>
                     </a>
                 </li>
             </ul> 
+            @endif
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
         </aside>
-        <div class="content-wrapper">
+        <div class="content-wrapper"style="background-image: url('dist/img/background-spot.svg')">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">

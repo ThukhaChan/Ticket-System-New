@@ -24,7 +24,7 @@ class StoreTicketRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required |unique:tickets,title',
+            'title'=>'required',
             'description'=>'required',
             'priority_id'=>'required',
             'label_id'=>'required',

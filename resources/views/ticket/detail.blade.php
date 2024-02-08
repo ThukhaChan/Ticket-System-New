@@ -1,9 +1,10 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('dashboard.index')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card-body shadow">
+            <div class="col-md-8" >
+                <div class="card-body shadow bg-light">
                     <div class="mb-3">
                         <table class="table">
                             <thead>
@@ -34,39 +35,51 @@
                                         @endforeach
                                     </td>
                                     <td>{{ $ticket->priority->name }}</td>
-                                    <td>{{ $ticket->label->name }}</td>
-                                    <td>{{ $ticket->category->name }}</td>
+                                    <td>
+                                        @foreach ($ticket->labels as $label)
+                                        {{ $label->name}}
+                                        @endforeach
+                                      </td>
+                                      <td>
+                                        @foreach ($ticket->categories as $category)
+                                        {{ $category->name}}
+                                        @endforeach
+                                      </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="mb-1 mt-3">
+                        {{-- <div class="mb-1 mt-3">
                             <a href="{{ route('ticket.index') }}" class="btn btn-outline-dark">Back</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <h4>Comments</h4>
+                <div class="mb-3">
+            <h4 class="mt-5">Comments</h4>
             <ul class="list-group">
                 <!-- Display existing comments -->
                 @foreach ($ticket->comments as $comment)
-                    <li class="list-group-item text-between">
-                        {{ $comment->text}}<br>
-                        <span class=" text-warning ">
+                    <li class="list-group-item text-between d-flex justify-content-between">
+                        <span>
+                            {{ $comment->text}}<br>
+                            <span class=" text-warning" style="font-size: 15px">
                             Comment by
                            {{ Auth::user()->name }}
                            @if (Auth::user()->role==0 ) <span class=" text-danger ">(Admin)</span> @elseif (Auth::user()->role==1) <span class=" text-danger ">(Agent)</span> @else <span class=" text-danger ">(User)</span> @endif
                            {{-- ({{ Auth::user()->role }}) --}}
+                            </span>
                         </span>
-                        <form method="POST" action="{{ route('comment.destroy',$comment->id) }}" class="d-inline-block">
+                        <span>
+                            {{-- <a href="{{ route('ticket.edit',$ticket->id) }}" class="btn me-1">
+                                <i class="fas fa-edit text-warning"></i>
+                              </a> --}}
+                           <form method="POST" action="{{ route('comment.destroy',$comment->id) }}" class="d-inline-block">
                             @method('delete')
                             @csrf
-                           <button href="" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">
-                             <i class="fas fa-trash"></i>
+                           <button href="" class="btn" onclick="return confirm('Are you sure?')">
+                             <i class="fas fa-trash text-danger"></i>
                            </button>
                         </form>
+                        </span>
                     </li>
 
                     
@@ -87,5 +100,9 @@
         <div class="mb-1 mt-3">
             <a href="{{ route('ticket.index') }}" class="btn btn-outline-dark">Back</a>
         </div>
+            </div>
+        </div>
+
+        
 
     @endsection

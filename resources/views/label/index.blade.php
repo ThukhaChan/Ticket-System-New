@@ -22,9 +22,10 @@
     .custom-tbody tbody tr:hover {
       background-color: #cce5ff; /* Light blue on hover */
     }
+    }
   </style>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 p-5 rounded-1">
             <div class="card-body">
               @if (session('edit'))
                 <div class=" alert alert-warning">
@@ -42,7 +43,8 @@
                 </div>
               @endif
             </div>
-                <table class="table table-striped">
+            <h1 class="text-center text-bold">Label</h1>
+                <table class="table table-striped shadow">
                     <thead class="custom-table">
                       <tr>
                         <th scope="col">#</th>
@@ -65,9 +67,9 @@
                                 <a href="{{ route('label.edit',$label->id) }}" class="btn btn-outline-warning me-1">
                                   <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="{{ route('label.show',$label->id) }}" class="btn btn-outline-info me-1">
+                                {{-- <a href="{{ route('label.show',$label->id) }}" class="btn btn-outline-info me-1">
                                   <i class="fas fa-info"></i>
-                              </a>
+                              </a> --}}
                                 <form method="POST" action="{{ route('label.destroy',$label->id) }}" class="d-inline-block">
                                     @method('delete')
                                     @csrf

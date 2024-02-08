@@ -8,6 +8,10 @@ use App\Http\Requests\UpdateTicketCategoryRequest;
 
 class TicketCategoryController extends Controller
 {
+    public function __construct()
+{
+    $this->Middleware('auth');
+}
     /**
      * Display a listing of the resource.
      *

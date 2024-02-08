@@ -2,11 +2,11 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-6"> 
                 <div class="card mt-5 shadow">
                     <div class="card-body m-3">
                         <div class="">
-                            <h1 class="bg-gradient text-center">
+                            <h1 class="text-center text-bold">
                                 label</h1>
                             @if (session('success'))
                                 <div class=" alert alert-success">

@@ -24,7 +24,8 @@ class UpdateTicketRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required |unique:tickets,title',
+            'title'=>'required ',  
+            // |unique:tickets,title
             'description'=>'required',
             'priority_id'=>'required',
             'label_id'=>'required',

@@ -6,7 +6,7 @@
                <div class="card mt-5 shadow">
                 <div class="card-body m-3">
                     <div class="">
-                        <h1>Category</h1>
+                        <h1 class="text-bold">Category</h1>
                         <form method="POST" action="{{ route('category.update',$category->id) }}">
                             @csrf
                             @method('PUT')

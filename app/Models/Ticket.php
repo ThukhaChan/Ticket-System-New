@@ -12,27 +12,27 @@ class Ticket extends Model
     {
         return $this->belongsTo(Priority::class);
     }
-    public function label()
-    {
-        return $this->belongsTo(Label::class);
-    }
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+    // public function label()
+    // {
+    //     return $this->belongsTo(Label::class);
+    // }
+    // public function category()
+    // {
+    //     return $this->belongsTo(Category::class);
+    // }
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
     public function labels()
     {
-        return $this->belongsToMany(Label::class, 'ticket_label', 'ticket_id', 'label_id')
+        return $this->belongsToMany(Label::class, 'ticket_labels', 'ticket_id', 'label_id')
                     ->withTimestamps();
     }
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'ticket_category', 'ticket_id', 'category_id')
+        return $this->belongsToMany(Category::class, 'ticket_categories', 'ticket_id', 'category_id')
                     ->withTimestamps();
     }
 }

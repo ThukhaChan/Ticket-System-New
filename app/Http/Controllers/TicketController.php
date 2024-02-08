@@ -8,6 +8,9 @@ use App\Http\Requests\UpdateTicketRequest;
 use App\Models\Category;
 use App\Models\Label;
 use App\Models\Priority;
+use App\Models\User;
+use GuzzleHttp\Middleware;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -16,8 +19,13 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+public function __construct()
+{
+    $this->Middleware('auth');
+}
+
     public function index()
-    {
+    {   
         $tickets=Ticket::all();
          return view('ticket.index',compact('tickets'));
     }
@@ -57,15 +65,16 @@ class TicketController extends Controller
         $imagePathsString = implode(',', $imagePaths);
         // Store image paths as comma-separated string
         $ticket=new Ticket();
+        $ticket->user_id=Auth::id();
         $ticket->image=$imagePathsString;
         $ticket->title=$request->title;
         $ticket->description=$request->description;
         $ticket->priority_id=$request->priority_id;
         // $ticket->label_id=$request->label_id;
         // $ticket->category_id=$request->category_id;
-        $ticket->labels()->attach($request['label_id']);
-        $ticket->categories()->attach($request['category_id']);
         $ticket->save();
+        $ticket->labels()->attach($request->input('label_id'));
+        $ticket->categories()->attach($request['category_id']);
         return redirect()->route('ticket.create')->with('success','ticket is Saving Successful');
     }
 
@@ -91,7 +100,10 @@ class TicketController extends Controller
         $priorities=Priority::all();
         $labels=Label::all();
         $categories=Category::all();
-        return view('ticket.edit',compact('categories','priorities','labels','ticket'))->with('edit','Ticket is Editing Successful');
+        $users=User::where('role',2)->get();
+        $checkedLabels=$ticket->labels->pluck('id')->toArray();
+        $checkedCategories=$ticket->categories->pluck('id')->toArray();
+        return view('ticket.edit',compact('categories','priorities','labels','ticket','checkedLabels','checkedCategories','users'))->with('edit','Ticket is Editing Successful');
     }
 
     /**
@@ -103,6 +115,9 @@ class TicketController extends Controller
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
+       
+        $labels=Label::all();
+        $categories=Category::all();
         if($request->image)
         {
             $image=$request->image;
@@ -113,19 +128,25 @@ class TicketController extends Controller
             $ticket->title=$request->title;
             $ticket->description=$request->description;
             $ticket->priority_id=$request->priority_id;
-            $ticket->label_id=$request->label_id;
-            $ticket->category_id=$request->category_id;
+            // $ticket->label_id=$request->label_id;
+            // $ticket->category_id=$request->category_id;
             $ticket->image=$newName;
-            $ticket->update();
+
+                $ticket->labels()->sync($request->label_id);
+                $ticket->categories()->sync($request->category_id);
+
+                $ticket->update();
             return redirect()->route('ticket.index')->with('update','Ticket is Updating Successful');
         }
             $ticket->title=$request->title;
             $ticket->description=$request->description;
             $ticket->priority_id=$request->priority_id;
-            $ticket->label_id=$request->label_id;
-            $ticket->category_id=$request->category_id;
+                $ticket->labels()->sync($request->input('label_id'));
+     
+                $ticket->categories()->sync($request->input('category_id'));
+
             $ticket->update();
-            return redirect()->route('ticket.index')->with('update','Ticket is Updating Successful');
+            return redirect()->route('ticket.index',compact('labels','categories'))->with('update','Ticket is Updating Successful');
     }
 
     /**

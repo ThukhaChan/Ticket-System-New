@@ -24,7 +24,7 @@
     }
   </style>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 p-5 rounded-1">
             <div class="card-body">
               @if (session('edit'))
                 <div class=" alert alert-warning">
@@ -42,6 +42,7 @@
                 </div>
               @endif
             </div>
+            <h1 class="text-center text-bold">Categories</h1>
                 <table class="table table-striped">
                     <thead class="custom-table">
                       <tr>
@@ -65,9 +66,9 @@
                                 <a href="{{ route('category.edit',$category->id) }}" class="btn btn-outline-warning me-1">
                                   <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="{{ route('category.show',$category->id) }}" class="btn btn-outline-info me-1">
+                                {{-- <a href="{{ route('category.show',$category->id) }}" class="btn btn-outline-info me-1">
                                   <i class="fas fa-info"></i>
-                              </a>
+                              </a> --}}
                                 <form method="POST" action="{{ route('category.destroy',$category->id) }}" class="d-inline-block">
                                     @method('delete')
                                     @csrf

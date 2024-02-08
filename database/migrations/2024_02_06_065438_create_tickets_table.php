@@ -16,8 +16,8 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('priority_id');
-            $table->foreignId('category_id');
-            $table->foreignId('label_id');
+            $table->foreignId('user_id');
+            $table->foreignId('user_assign_id')->nullable();
             $table->string('title');
             $table->longText('description');
             $table->longText('image');

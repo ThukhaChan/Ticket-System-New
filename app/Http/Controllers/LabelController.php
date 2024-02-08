@@ -8,6 +8,10 @@ use App\Http\Requests\UpdateLabelRequest;
 
 class LabelController extends Controller
 {
+    public function __construct()
+{
+    $this->Middleware('auth');
+}
     /**
      * Display a listing of the resource.
      *

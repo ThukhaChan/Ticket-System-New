@@ -6,7 +6,7 @@
                 <div class="card mt-5 shadow">
                     <div class="card-body m-3">
                         <div class="">
-                            <h1 class="bg-gradient text-center">
+                            <h1 class="bg-gradient text-center text-bold">
                                 Priority</h1>
                             @if (session('success'))
                                 <div class=" alert alert-success">

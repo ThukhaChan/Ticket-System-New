@@ -6,7 +6,7 @@
                <div class="card mt-5 shadow">
                 <div class="card-body m-3">
                     <div class="">
-                        <h1>label</h1>
+                        <h1 class="text-bold">label</h1>
                         <form method="POST" action="{{ route('label.update',$label->id) }}">
                             @csrf
                             @method('PUT')

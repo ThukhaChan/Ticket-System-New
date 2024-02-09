@@ -83,7 +83,7 @@
                             @if ((Auth::user()->role==0) )
                             <div class="mb-3 mt-3">
                                 <label class="form-label">Select Agent Assign<small class="text-danger">*</small></label>
-                                <select class="form-control" name="user">
+                                <select class="form-control" name="user_assign_id">
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}"
                                            {{ $ticket->user_assign_id==$user->id ? ' selected' : '' }}>

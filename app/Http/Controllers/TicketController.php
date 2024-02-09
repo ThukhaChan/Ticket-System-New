@@ -25,9 +25,24 @@ public function __construct()
 }
 
     public function index()
-    {   
-        $tickets=Ticket::all();
-         return view('ticket.index',compact('tickets'));
+    {
+        // if (Auth::user()->role == 1) {
+        // $tickets=Ticket::all();
+        //  return view('ticket.index',compact('tickets'));
+        // }
+        if(Auth::user()->role == 1){
+            $tickets = Ticket::where('user_assign_id', Auth::user()->id)
+                    ->orWhere('user_id', Auth::user()->id)->get();
+            return view('ticket.index', compact('tickets'));
+        }
+        elseif (Auth::user()->role == 0) {
+            $tickets=Ticket::all();
+             return view('ticket.index',compact('tickets'));
+            }
+        else{
+            $tickets=Ticket::where('user_id',Auth::user()->id)->get();
+            return view('ticket.index',compact('tickets'));
+        }
     }
 
     /**
@@ -70,6 +85,7 @@ public function __construct()
         $ticket->title=$request->title;
         $ticket->description=$request->description;
         $ticket->priority_id=$request->priority_id;
+        $ticket->user_assign_id=$request->user_assign_id;
         // $ticket->label_id=$request->label_id;
         // $ticket->category_id=$request->category_id;
         $ticket->save();
@@ -115,7 +131,7 @@ public function __construct()
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-       
+    //    return $request;
         $labels=Label::all();
         $categories=Category::all();
         if($request->image)
@@ -124,13 +140,12 @@ public function __construct()
 
             $newName="gallery_".uniqid().".".$image->extension();
             $image->storeAs("public/gallery",$newName);
-           
+
             $ticket->title=$request->title;
             $ticket->description=$request->description;
             $ticket->priority_id=$request->priority_id;
-            // $ticket->label_id=$request->label_id;
-            // $ticket->category_id=$request->category_id;
             $ticket->image=$newName;
+            $ticket->user_assign_id=$request->user_assign_id;
 
                 $ticket->labels()->sync($request->label_id);
                 $ticket->categories()->sync($request->category_id);
@@ -141,8 +156,9 @@ public function __construct()
             $ticket->title=$request->title;
             $ticket->description=$request->description;
             $ticket->priority_id=$request->priority_id;
+            $ticket->user_assign_id=$request->user_assign_id;
                 $ticket->labels()->sync($request->input('label_id'));
-     
+
                 $ticket->categories()->sync($request->input('category_id'));
 
             $ticket->update();

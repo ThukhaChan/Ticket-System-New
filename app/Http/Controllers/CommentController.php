@@ -19,7 +19,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-       
+
     }
 
     /**
@@ -68,7 +68,8 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        
+        return redirect()->back()->with('sesComment', $comment);
+
     }
 
     /**
@@ -80,7 +81,13 @@ class CommentController extends Controller
      */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        //
+        $userId = $comment->user->id;
+        $comment->text=$request->text;
+        $comment->user_id=$userId;
+        $comment->ticket_id=$request->ticket_id;
+        $comment->update();
+        // session()->flash('comment', $comment);
+        return redirect()->back()->with('success','comment is Updating Successful');
     }
 
     /**

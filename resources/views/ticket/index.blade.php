@@ -59,7 +59,6 @@
                         </thead>
      
                       <!--  read data from database  --> 
-    
                         <tbody class="custom-tbody">
                           @foreach ($tickets as $ticket )
                           <tr>
@@ -88,16 +87,19 @@
                               {{ $category->name}}
                               @endforeach
                             </td>
+                           
                             <td>
+                              
+                           
                                 <!-- font awesome & bootstrip icon -->
                                 <div class="d-flex justify-content-center">
+                                  <a href="{{ route('ticket.show',$ticket->id) }}" class="btn btn-outline-info me-1">
+                                    <i class="fas fa-info"></i>
+                                </a>
+                                  @if((Auth::user()->role==0))
                                     <a href="{{ route('ticket.edit',$ticket->id) }}" class="btn btn-outline-warning me-1">
                                       <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('ticket.show',$ticket->id) }}" class="btn btn-outline-info me-1">
-                                      <i class="fas fa-info"></i>
-                                  </a>
-                                    
                                     <form method="POST" action="{{ route('ticket.destroy',$ticket->id) }}" class="d-inline-block">
                                         @method('delete')
                                         @csrf
@@ -107,6 +109,7 @@
                                     </form>
                                 </div>
                             </td>
+                            @endif
                           </tr>
                           @endforeach
                         </tbody>

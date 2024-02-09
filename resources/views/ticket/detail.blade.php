@@ -53,7 +53,7 @@
                         </div> --}}
                     </div>
                 </div>
-                <div class="mb-3">
+            <div class="mb-3">
             <h4 class="mt-5">Comments</h4>
             <ul class="list-group">
                 <!-- Display existing comments -->
@@ -63,15 +63,17 @@
                             {{ $comment->text}}<br>
                             <span class=" text-warning" style="font-size: 15px">
                             Comment by
-                           {{ Auth::user()->name }}
-                           @if (Auth::user()->role==0 ) <span class=" text-danger ">(Admin)</span> @elseif (Auth::user()->role==1) <span class=" text-danger ">(Agent)</span> @else <span class=" text-danger ">(User)</span> @endif
+                           {{-- {{ Auth::user()->name }} --}}
+                           {{ $comment->user->name }}
+                           @if ($comment->user->role==0 ) <span class=" text-danger ">(Admin)</span> @elseif ($comment->user->role==1) <span class=" text-danger ">(Agent)</span> @else <span class=" text-danger ">(User)</span> @endif
                            {{-- ({{ Auth::user()->role }}) --}}
                             </span>
                         </span>
+                        @if ((Auth::user()->role==0 ||Auth::user()->role==1 || Auth::user()->id==$comment->user->id))
                         <span>
-                            {{-- <a href="{{ route('ticket.edit',$ticket->id) }}" class="btn me-1">
+                            <a href="{{ route('comment.edit',$comment->id) }}" class="btn me-1">
                                 <i class="fas fa-edit text-warning"></i>
-                              </a> --}}
+                            </a>
                            <form method="POST" action="{{ route('comment.destroy',$comment->id) }}" class="d-inline-block">
                             @method('delete')
                             @csrf
@@ -80,13 +82,26 @@
                            </button>
                         </form>
                         </span>
+                        @endif
                     </li>
 
-                    
+
                 @endforeach
             </ul>
         </div>
         <!-- Add Comment Form -->
+        @if (session('sesComment'))
+        <form action="{{ route('comment.update', session('sesComment')) }}" method="POST">
+            @csrf
+            @method('Put')
+            <div class="mb-3">
+                <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                <label for="comment" class="form-label">Add Comment</label>
+                <textarea class="form-control" name="text" rows="3">{{ session('sesComment.text') }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        @else
         <form action="{{ route('comment.store') }}" method="POST">
             @csrf
             <div class="mb-3">
@@ -96,6 +111,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
+        @endif
         <!-- End of Comment Section -->
         <div class="mb-1 mt-3">
             <a href="{{ route('ticket.index') }}" class="btn btn-outline-dark">Back</a>
@@ -103,6 +119,6 @@
             </div>
         </div>
 
-        
+
 
     @endsection
